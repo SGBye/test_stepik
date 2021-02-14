@@ -1,0 +1,6 @@
+FROM node:current-alpine3.10
+
+RUN mkdir /code
+WORKDIR /code
+
+COPY ./package*.json ./

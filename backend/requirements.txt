@@ -1,0 +1,10 @@
+django == 2.2.0
+psycopg2-binary == 2.8.4
+djangorestframework == 3.10.3
+djangorestframework-jwt  == 1.11.0
+requests
+beautifulsoup4
+django-filter
+celery==4.4.0
+redis==3.4.1
+django-redis
