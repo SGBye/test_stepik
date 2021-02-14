@@ -1,0 +1,5 @@
+DATABASE=postgres
+POSTGRES_USER=postgres
+POSTGRES_DB=postgres
+SQL_HOST=db
+SQL_PORT=5432

@@ -17,7 +17,6 @@ services:
     build:
       context: backend/
       dockerfile: Dockerfile.backend
-
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend/:/code
@@ -25,6 +24,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    env_file:
+      - docker/env
     entrypoint: /code/entrypoint.backend.dev.sh
 
   frontend:
