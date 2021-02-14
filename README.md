@@ -28,4 +28,5 @@
 Для этого после запуска сервиса необходимо выполнить:
 
 ```docker-compose exec backend python manage.py createsuperuser```
+
 ... и завершить процесс создания пользователя.
