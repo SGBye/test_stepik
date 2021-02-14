@@ -26,3 +26,35 @@ services:
     depends_on:
       - db
     entrypoint: /code/entrypoint.backend.dev.sh
+
+  frontend:
+    build:
+      context: frontend/
+      dockerfile: Dockerfile.frontend
+    command: /bin/sh -c "yarn install && yarn serve"
+    volumes:
+      - ./frontend/:/code
+      - /code/node_modules
+    ports:
+      - 8080:8080
+    depends_on:
+      - backend
+
+  rabbit:
+    image: "rabbitmq:3.7.14-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  celery_worker:
+    build:
+      context: backend/
+      dockerfile: Dockerfile.backend
+    volumes:
+      - ./backend/:/code
+    command: celery -A stepik worker -l INFO
+    restart: always
+    depends_on:
+      - rabbit
+      - backend
+    entrypoint: /code/entrypoint.backend.dev.sh

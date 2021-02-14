@@ -1,41 +1,52 @@
 <template>
-    <v-col cols="3">
-        <v-sheet rounded="lg">
-            <v-list color="transparent">
-                <v-list-item
-                    v-for="classifier in classifiers"
-                    :key="classifier.id"
-                    replace
-                    :to="{ name: 'settingsList', params: { classifier: classifier.id }}"
-                >
-                    <v-list-item-content>
-                        <v-list-item-title>
-                            {{ classifier.verbose_name }}
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </v-sheet>
-    </v-col>
+  <v-col cols="3">
+    <v-sheet rounded="lg">
+      <v-list color="transparent">
+        <v-list-item
+            v-for="task in tasks"
+            :key="task.id"
+            link
+        >
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ task.verbose_name }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider class="my-2"></v-divider>
+
+        <v-list-item
+            link
+            color="grey lighten-4"
+            @click="ping"
+        >
+          <v-list-item-content>
+            <v-list-item-title>
+              Refresh
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-sheet>
+  </v-col>
 </template>
 
 <script>
-import {scorickApi} from "../../services/api";
+import {stepikApi} from "@/services/api";
 
 export default {
-    name: "ControlPanel",
-    data: () => ({
-        classifiers: [],
-    }),
-    async mounted() {
-        this.classifiers = await this.getClassifiersData()
-    },
-    methods: {
-        async getClassifiersData() {
-            const classifierData = await scorickApi.getClassifiers()
-            return classifierData.data.data
-        }
+  name: "ControlPanel",
+  data: () => ({
+    tasks: [{"verbose_name": "Сумма", "id": 'summ'}],
+  }),
+  async mounted() {
+  },
+  methods: {
+    async ping() {
+      await stepikApi.ping()
     }
+  }
 }
 </script>
 
