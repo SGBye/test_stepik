@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CLIENT_BASE_PATH} from '@/utils/constants';
+import {CLIENT_BASE_PATH} from '@/utils/constants';
 
 
 const apiClient = axios.create({
@@ -18,6 +18,7 @@ class StepikAPI {
 
     async checkCode(code) {
         return this.apiClient.post('solutions/', code).then((response) => (response.data))
+            .catch((error) => ({"error": error}))
     }
 
     async retrieveLastSolution() {
@@ -32,4 +33,4 @@ class StepikAPI {
 const stepikApi = new StepikAPI(apiClient);
 
 
-export { stepikApi };
+export {stepikApi};

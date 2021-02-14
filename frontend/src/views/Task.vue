@@ -1,6 +1,9 @@
 <template>
   <v-main>
     <h1 class="ml-16">Напишите метод, суммирующий два числа a и b.</h1>
+    <p
+        v-if="errorMessage"
+    >{{ errorMessage }}</p>
     <v-container
         fluid
         :class="containerStatus"
@@ -124,6 +127,7 @@ export default {
     },
     polling: null,
     status: null,
+    errorMessage: null,
   }),
   computed: {
     loader: function () {
@@ -154,9 +158,16 @@ export default {
   ,
   methods: {
     async checkCode() {
-      const codeObject = {"code": this.code}
-      const response = await stepikApi.checkCode(codeObject)
 
+      const codeObject = {"code": this.code}
+
+      const response = await stepikApi.checkCode(codeObject)
+      if (response.error) {
+        this.errorMessage = response.error
+        return
+      } else {
+        this.errorMessage = null
+      }
       const solutionId = response.solution_id
       this.status = response.status
 
