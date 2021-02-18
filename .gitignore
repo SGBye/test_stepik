@@ -7,25 +7,10 @@ env/
 venv/
 /tmp/
 
-docs/_build/
-docs/_bin/
-docs/bin/plantuml.jar
-
 geoip/
 
 __pycache__/
 *.pyc
-
-dist/
-!dist/.gitkeep
-*.egg-info
-
-.coverage
-/coverage/
-/htmlcov/
-.mypy_cache
-.pytest_cache
-junit/
 
 settings/local.py
 settings/local.py.backup
@@ -38,7 +23,7 @@ touch.txt
 *.log
 
 _media/
-certs
 .python-version
 .DS_Store
 dump_data.json
+/backend/staticfiles/
