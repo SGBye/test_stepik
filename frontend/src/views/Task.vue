@@ -161,31 +161,30 @@ export default {
 
       const codeObject = {"code": this.code}
 
-      const response = await stepikApi.checkCode(codeObject)
-      if (response.error) {
-        this.errorMessage = response.error
-        return
-      } else {
-        this.errorMessage = null
+      try {
+        const response = await stepikApi.checkCode(codeObject)
+
+
+        const solutionId = response.solution_id
+        this.status = response.status
+
+        this.polling = setInterval(async () => {
+          await this.processSolutionStatus(solutionId);
+        }, 1000);
+      } catch (error) {
+        this.errorMessage = error.data
       }
-      const solutionId = response.solution_id
-      this.status = response.status
 
-      this.polling = setInterval(async () => {
-        await this.processSolutionStatus(solutionId);
-      }, 1000);
 
-    }
-    ,
+    },
 
     async getLastSolution() {
       return await stepikApi.retrieveLastSolution()
-    }
-    ,
+    },
 
     async processSolutionStatus(id) {
       const response = await stepikApi.checkSolutionStatus(id)
-
+      console.log(response)
       this.status = response.status
 
       if (response.status !== "evaluation") {

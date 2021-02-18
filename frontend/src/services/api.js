@@ -7,26 +7,32 @@ const apiClient = axios.create({
 });
 
 
+apiClient.interceptors.response.use(function (response) {
+    return response.data;
+  }, function (error) {
+    return Promise.reject(error.response);
+  });
+
+
 class StepikAPI {
     constructor(apiClient) {
         this.apiClient = apiClient;
     }
 
     async ping() {
-        return this.apiClient.get('ping/').then((response) => (response.data))
+        return this.apiClient.get('ping/')
     }
 
     async checkCode(code) {
-        return this.apiClient.post('solutions/', code).then((response) => (response.data))
-            .catch((error) => ({"error": error}))
+        return this.apiClient.post('solutions/', code)
     }
 
     async retrieveLastSolution() {
-        return this.apiClient.get('last_user_solution/').then((response) => (response.data))
+        return this.apiClient.get('last_user_solution/')
     }
 
     async checkSolutionStatus(id) {
-        return this.apiClient.get(`check_solution_status/${id}/`).then((response) => (response.data))
+        return this.apiClient.get(`check_solution_status/${id}/`)
     }
 }
 
